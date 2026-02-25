@@ -220,20 +220,19 @@
         .hero-image {
             width: 450px;
             height: 450px;
-            border-radius:  30% 70% 70% 30% / 30% 30% 70% 70%;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--light); /* Fallback */
+            background: var(--light);
         }
 
         .hero-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Gambar tetap proporsional, terpotong jika perlu */
-            /* atau pakai object-fit: contain; kalau mau seluruh gambar kelihatan */
+            object-fit: cover;
         }
 
         /* SECTION STYLING */
@@ -298,11 +297,6 @@
             height: 100%;
             object-fit: cover;
             object-position: center center;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
         }
 
         .instagram-link {
@@ -435,6 +429,121 @@
             border: none;
         }
 
+        /* KONSULTASI SECTION - FORM & TABLE */
+        .konsultasi-container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 106, 79, 0.3);
+        }
+
+        /* TABLE STYLING */
+        .table-container {
+            margin-top: 40px;
+            overflow-x: auto;
+            display: none; /* Hidden by default */
+        }
+
+        .table-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .data-table thead {
+            background: var(--primary);
+            color: white;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table tbody tr {
+            transition: background 0.3s ease;
+        }
+
+        .data-table tbody tr:hover {
+            background: var(--light);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+            font-style: italic;
+        }
+
         /* FOOTER */
         footer {
             background: var(--primary);
@@ -512,6 +621,16 @@
 
             .nav-right a:not(.btn-login) {
                 display: none;
+            }
+
+            .konsultasi-container {
+                padding: 30px 20px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 10px;
+                font-size: 0.9rem;
             }
         }
 
@@ -600,9 +719,26 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        /* Success Message */
+        .success-message {
+            background: var(--light);
+            color: var(--primary);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
     </style>
 
 </head>
+<body>
     <nav id="navbar">
         <div class="nav-left">
             <img src="image/jemari_bidan.jpeg" alt="Logo Jemari Bidan" class="logo">
@@ -617,7 +753,6 @@
             <a href="#" class="btn-login" id="openLogin">Login</a>
         </div>
     </nav>
-<body>
 
     <!-- HERO SECTION -->
     <section class="hero">
@@ -708,32 +843,54 @@
         </div>
     </section>
 
+    <!-- KONSULTASI SECTION -->
     <section id="kontak" class="fade-in">
         <h2 class="section-title">Daftar Konsultasi</h2>
 
-        <div style="background: white; padding: 50px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); max-width: 700px; margin: auto;">            
+        <div class="konsultasi-container">
+            <!-- Success Message -->
+            <div id="successMessage" class="success-message">
+                ✅ Data berhasil ditambahkan! Berikut adalah daftar konsultasi Anda:
+            </div>
+
+            <!-- Form -->
             <form id="formKonsultasi">
-                <div style="margin-bottom: 20px;">
-                    <label>Nama Lengkap</label><br>
-                    <input type="text" id="nama" required style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" required placeholder="Masukkan nama lengkap Anda">
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <label>Email</label><br>
-                    <input type="email" id="email" required style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="contoh@email.com">
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <label>Keluhan</label><br>
-                    <textarea id="keluhan" required style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;"></textarea>
+                <div class="form-group">
+                    <label for="keluhan">Keluhan</label>
+                    <textarea id="keluhan" rows="4" required placeholder="Jelaskan keluhan atau pertanyaan Anda..."></textarea>
                 </div>
 
-                <button type="submit" style="background: var(--primary); color:white; padding:12px 30px; border:none; border-radius:20px; cursor:pointer;">
-                    Kirim
-                </button>
+                <button type="submit" class="btn-submit">Kirim Data</button>
             </form>
-        <div id="hasilForm" style="margin-top:30px;"></div>
 
+            <!-- Table Container -->
+            <div id="tableContainer" class="table-container">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">Data Konsultasi</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Lengkap</th>
+                            <th>Email</th>
+                            <th>Keluhan</th>
+                            <th>Waktu Daftar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
@@ -774,6 +931,7 @@
             <div id="hasilLogin" class="login-result"></div>
         </div>
     </div>
+
     <script>
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
@@ -816,6 +974,8 @@
                 }
             });
         });
+
+        // Login Modal
         const modal = document.getElementById("loginModal");
         const openBtn = document.getElementById("openLogin");
         const closeBtn = document.querySelector(".close-btn");
@@ -849,6 +1009,83 @@
             }
             this.reset();
         });
+
+        // KONSULTASI FORM HANDLING
+        let nomorUrut = 1;
+        const dataKonsultasi = [];
+
+        document.getElementById("formKonsultasi").addEventListener("submit", function(event){
+            event.preventDefault();
+
+            // Ambil nilai dari form
+            const nama = document.getElementById("nama").value;
+            const email = document.getElementById("email").value;
+            const keluhan = document.getElementById("keluhan").value;
+            const waktu = new Date().toLocaleString('id-ID', {
+                dateStyle: 'medium',
+                timeStyle: 'short'
+            });
+
+            // Simpan data
+            const data = {
+                no: nomorUrut++,
+                nama: nama,
+                email: email,
+                keluhan: keluhan,
+                waktu: waktu
+            };
+            dataKonsultasi.push(data);
+
+            // Update tabel
+            updateTable();
+
+            // Tampilkan success message dan table container
+            document.getElementById("successMessage").classList.add("show");
+            document.getElementById("tableContainer").classList.add("show");
+
+            // Reset form
+            this.reset();
+
+            // Scroll ke tabel
+            document.getElementById("tableContainer").scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest' 
+            });
+        });
+
+        function updateTable() {
+            const tbody = document.getElementById("tableBody");
+            tbody.innerHTML = "";
+
+            dataKonsultasi.forEach((data, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${data.no}</td>
+                    <td>${escapeHtml(data.nama)}</td>
+                    <td>${escapeHtml(data.email)}</td>
+                    <td>${escapeHtml(data.keluhan)}</td>
+                    <td>${data.waktu}</td>
+                `;
+                
+                // Animasi untuk baris baru
+                if (index === dataKonsultasi.length - 1) {
+                    row.style.animation = "fadeIn 0.5s ease";
+                    row.style.backgroundColor = "var(--light)";
+                    setTimeout(() => {
+                        row.style.backgroundColor = "";
+                    }, 2000);
+                }
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Helper function untuk mencegah XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
     </script>
 
 </body>
