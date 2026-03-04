@@ -1,1092 +1,208 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Website Jemari Bidan - Pelayanan kesehatan ibu dan anak">
-    <meta name="author" content="Ananda">
-    <title>Jemari Bidan - Pelayanan Kesehatan Ibu & Anak</title>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #2d6a4f;
-            --secondary: #40916c;
-            --accent: #74c69d;
-            --light: #d8f3dc;
-            --cream: #f8f9fa;
-            --text: #1b4332;
-            --white: #ffffff;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--cream);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* NAVBAR */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 50px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--accent);
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .brand-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            letter-spacing: 1px;
-        }
-
-        .nav-right {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-right a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            font-size: 0.95rem;
-            position: relative;
-            padding: 8px 0;
-            transition: color 0.3s ease;
-        }
-
-        .nav-right a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--secondary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-right a:hover {
-            color: var(--secondary);
-        }
-
-        .nav-right a:hover::after {
-            width: 100%;
-        }
-
-        .btn-login {
-            background: var(--primary);
-            color: var(--white) !important;
-            padding: 10px 25px !important;
-            border-radius: 25px;
-            transition: all 0.3s ease !important;
-        }
-
-        .btn-login:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(45, 106, 79, 0.3);
-        }
-
-        .btn-login::after {
-            display: none !important;
-        }
-
-        /* HERO SECTION */
-        .hero {
-            margin-top: 80px;
-            background: linear-gradient(135deg, var(--light) 0%, var(--cream) 100%);
-            padding: 100px 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 90vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(116, 198, 157, 0.2) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
-        }
-
-        .hero-content {
-            max-width: 600px;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 20px;
-            line-height: 1.2;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.2s forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: var(--primary);
-            color: var(--white);
-            padding: 15px 40px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3);
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.4s forwards;
-        }
-
-        .cta-button:hover {
-            background: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(45, 106, 79, 0.4);
-        }
-
-        .hero-image {
-            width: 450px;
-            height: 450px;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--light);
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* SECTION STYLING */
-        section {
-            padding: 100px 50px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 50px;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        /* ABOUT SECTION */
-        .about {
-            background: var(--white);
-            border-radius: 30px;
-            padding: 60px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .about-content p {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 20px;
-            text-align: justify;
-        }
-
-        .about-image {
-            width: 100%;
-            height: 400px;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center center;
-        }
-
-        .instagram-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: var(--white);
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .instagram-link:hover {
-            transform: scale(1.05);
-        }
-
-        /* SERVICES SECTION */
-        .services {
-            background: linear-gradient(to bottom, var(--cream), var(--light));
-            border-radius: 30px;
-            margin: 0 50px;
-            max-width: calc(100% - 100px);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .service-card {
-            background: var(--white);
-            padding: 40px 30px;
-            border-radius: 20px;
-            text-align: center;
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--accent);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            background: var(--light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover .service-icon {
-            background: var(--accent);
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .service-icon img {
-            width: 50px;
-            height: 50px;
-            filter: hue-rotate(140deg) saturate(0.5);
-            transition: filter 0.3s ease;
-        }
-
-        .service-card:hover .service-icon img {
-            filter: hue-rotate(140deg) saturate(1) brightness(1.2);
-        }
-
-        .service-card h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .service-card p {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* VIDEO SECTION */
-        .video-section {
-            text-align: center;
-            background: var(--white);
-            border-radius: 30px;
-            padding: 60px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 450px;
-            border: none;
-        }
-
-        /* KONSULTASI SECTION - FORM & TABLE */
-        .konsultasi-container {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            max-width: 900px;
-            margin: auto;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 2px solid #e0e0e0;
-            font-family: 'Poppins', sans-serif;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .btn-submit {
-            background: var(--primary);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-submit:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(45, 106, 79, 0.3);
-        }
-
-        /* TABLE STYLING */
-        .table-container {
-            margin-top: 40px;
-            overflow-x: auto;
-            display: none; /* Hidden by default */
-        }
-
-        .table-container.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        .data-table thead {
-            background: var(--primary);
-            color: white;
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        .data-table th {
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-        }
-
-        .data-table tbody tr {
-            transition: background 0.3s ease;
-        }
-
-        .data-table tbody tr:hover {
-            background: var(--light);
-        }
-
-        .data-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .no-data {
-            text-align: center;
-            color: #999;
-            padding: 40px;
-            font-style: italic;
-        }
-
-        /* FOOTER */
-        footer {
-            background: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 40px;
-            margin-top: 100px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 968px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 120px 30px 60px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-image {
-                width: 300px;
-                height: 300px;
-                margin-top: 40px;
-            }
-
-            .about {
-                grid-template-columns: 1fr;
-                padding: 40px;
-            }
-
-            .services {
-                margin: 0 20px;
-                max-width: calc(100% - 40px);
-            }
-
-            nav {
-                padding: 15px 20px;
-            }
-
-            .nav-right {
-                gap: 15px;
-            }
-
-            .nav-right a:not(.btn-login) {
-                display: none;
-            }
-
-            .konsultasi-container {
-                padding: 30px 20px;
-            }
-
-            .data-table th,
-            .data-table td {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* SCROLL ANIMATION */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 40px;
-            width: 400px;
-            border-radius: 20px;
-            position: relative;
-            animation: slideDown 0.4s ease;
-        }
-
-        .close-btn {
-            position: absolute;
-            right: 20px;
-            top: 15px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 25px;
-            background: var(--primary);
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .login-btn:hover {
-            background: var(--secondary);
-        }
-
-        .login-result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        /* Animations */
-        @keyframes slideDown {
-            from { transform: translateY(-30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Success Message */
-        .success-message {
-            background: var(--light);
-            color: var(--primary);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--primary);
-            display: none;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: slideDown 0.4s ease;
-        }
-    </style>
-
-</head>
-<body>
-    <nav id="navbar">
-        <div class="nav-left">
-            <img src="image/jemari_bidan.jpeg" alt="Logo Jemari Bidan" class="logo">
-            <span class="brand-name">JEMARI BIDAN</span>
-        </div>
-
-        <div class="nav-right">
-            <a href="#tentang">Tentang</a>
-            <a href="#layanan">Layanan</a>
-            <a href="#edukasi">Edukasi</a>
-            <a href="#kontak">Konsultasi</a>
-            <a href="#" class="btn-login" id="openLogin">Login</a>
-        </div>
-    </nav>
-
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Perawatan Terbaik untuk Ibu & Bayi</h1>
-            <p>Layanan kesehatan profesional dengan sentuhan kasih sayang. Kami hadir untuk menemani perjalanan kehamilan dan perawatan bayi Anda.</p>
-            <a href="#layanan" class="cta-button">Jelajahi Layanan</a>
-        </div>
-        <div class="hero-image">
-            <img src="image/opsi1title.jpg" alt="Foto Bidan">
-        </div>
-    </section>
-
-    <!-- ABOUT SECTION -->
-    <section id="tentang" class="fade-in">
-        <h2 class="section-title">Tentang Kami</h2>
-        <div class="about">
-            <div class="about-content">
-                <p>
-                    <strong>Jemari Bidan</strong> adalah layanan kesehatan yang berfokus pada 
-                    perawatan ibu dan anak yang dilakukan oleh bidan-bidan bersertifikasi dengan penuh kasih dan profesionalisme. 
-                </p>
-                <p>
-                    Kami percaya bahwa setiap ibu dan bayi berhak mendapatkan 
-                    pelayanan terbaik. Dengan pengalaman bertahun-tahun, kami siap menjadi partner terpercaya dalam perjalanan kehamilan Anda.
-                </p>
-                <a href="https://www.instagram.com/jemari.bidan" target="_blank" class="instagram-link">
-                    <span>📸</span> Follow @jemari.bidan
-                </a>
-            </div>
-            <div class="about-image">
-                <img src="image/perawat2.jpg" alt="perawat">
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICES SECTION -->
-    <section id="layanan" class="services fade-in">
-        <h2 class="section-title">Layanan Kami</h2>
-        
-        <div class="services-grid">
-            <a href="https://www.halodoc.com/" target="_blank" style="text-decoration: none;">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png" alt="Konsultasi">
+                <!DOCTYPE html>
+                <html lang="id">
+
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <meta name="description" content="Website Jemari Bidan - Pelayanan kesehatan ibu dan anak">
+                    <meta name="author" content="Ananda">
+                    <link rel="stylesheet" href="style.css">
+                    <title>Jemari Bidan - Pelayanan Kesehatan Ibu & Anak</title>
+
+                </head>
+                <body>
+                    <nav id="navbar">
+                        <div class="nav-left">
+                            <img src="image/jemari_bidan.jpeg" alt="Logo Jemari Bidan" class="logo">
+                            <span class="brand-name">JEMARI BIDAN</span>
+                        </div>
+
+                        <div class="nav-right">
+                            <a href="#tentang">Tentang</a>
+                            <a href="#layanan">Layanan</a>
+                            <a href="#edukasi">Edukasi</a>
+                            <a href="#kontak">Konsultasi</a>
+                            <a href="#" class="btn-login" id="openLogin">Login</a>
+                        </div>
+                    </nav>
+
+                    <!-- HERO SECTION -->
+                    <section class="hero">
+                        <div class="hero-content">
+                            <h1>Perawatan Terbaik untuk Ibu & Bayi</h1>
+                            <p>Layanan kesehatan profesional dengan sentuhan kasih sayang. Kami hadir untuk menemani perjalanan kehamilan dan perawatan bayi Anda.</p>
+                            <a href="#layanan" class="cta-button">Jelajahi Layanan</a>
+                        </div>
+                        <div class="hero-image">
+                            <img src="image/opsi1title.jpg" alt="Foto Bidan">
+                        </div>
+                    </section>
+
+                    <!-- ABOUT SECTION -->
+                    <section id="tentang" class="fade-in">
+                        <h2 class="section-title">Tentang Kami</h2>
+                        <div class="about">
+                            <div class="about-content">
+                                <p>
+                                    <strong>Jemari Bidan</strong> adalah layanan kesehatan yang berfokus pada 
+                                    perawatan ibu dan anak yang dilakukan oleh bidan-bidan bersertifikasi dengan penuh kasih dan profesionalisme. 
+                                </p>
+                                <p>
+                                    Kami percaya bahwa setiap ibu dan bayi berhak mendapatkan 
+                                    pelayanan terbaik. Dengan pengalaman bertahun-tahun, kami siap menjadi partner terpercaya dalam perjalanan kehamilan Anda.
+                                </p>
+                                <a href="https://www.instagram.com/jemari.bidan" target="_blank" class="instagram-link">
+                                    <span>📸</span> Follow @jemari.bidan
+                                </a>
+                            </div>
+                            <div class="about-image">
+                                <img src="image/perawat2.jpg" alt="perawat">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SERVICES SECTION -->
+                    <section id="layanan" class="services fade-in">
+                        <h2 class="section-title">Layanan Kami</h2>
+                        
+                        <div class="services-grid">
+                            <a href="https://www.halodoc.com/" target="_blank" style="text-decoration: none;">
+                                <div class="service-card">
+                                    <div class="service-icon">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png" alt="Konsultasi">
+                                    </div>
+                                    <h3>Konsultasi Online</h3>
+                                    <p>Konsultasi kesehatan ibu dan anak dengan tenaga medis profesional kapan saja dan di mana saja.</p>
+                                </div>
+                            </a>
+
+                            <a href="https://www.alodokter.com/" target="_blank" style="text-decoration: none;">
+                                <div class="service-card">
+                                    <div class="service-icon">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/2785/2785544.png" alt="Pemeriksaan">
+                                    </div>
+                                    <h3>Pemeriksaan Kehamilan</h3>
+                                    <p>Pantau kesehatan kehamilan Anda dengan pemeriksaan rutin dan terjadwal bersama bidan berpengalaman.</p>
+                                </div>
+                            </a>
+
+                            <a href="https://kemkes.go.id/" target="_blank" style="text-decoration: none;">
+                                <div class="service-card">
+                                    <div class="service-icon">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/2785/2785482.png" alt="Informasi">
+                                    </div>
+                                    <h3>Informasi Kesehatan</h3>
+                                    <p>Akses informasi kesehatan terkini dan terpercaya untuk ibu hamil dan bayi dari sumber resmi.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- VIDEO SECTION -->
+                    <section id="edukasi" class="fade-in">
+                        <div class="video-section">
+                            <h2 class="section-title">Edukasi Pijat Bayi</h2>
+                            <p style="margin-bottom: 30px; color: #666;">Pelajari teknik pijat bayi yang benar untuk meningkatkan ikatan batin dan kesehatan si kecil</p>
+                            
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/6JP-66D-gBY?si=v7zq51VnoKkcilCh" 
+                                    title="Video Edukasi Pijat Bayi"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- KONSULTASI SECTION -->
+                    <section id="kontak" class="fade-in">
+                        <h2 class="section-title">Daftar Konsultasi</h2>
+
+                        <div class="konsultasi-container">
+                            <!-- Success Message -->
+                            <div id="successMessage" class="success-message">
+                                ✅ Data berhasil ditambahkan! Berikut adalah daftar konsultasi Anda:
+                            </div>
+
+                            <!-- Form -->
+                            <form id="formKonsultasi">
+                                <div class="form-group">
+                                    <label for="nama">Nama Lengkap</label>
+                                    <input type="text" id="nama" required placeholder="Masukkan nama lengkap Anda">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" required placeholder="contoh@email.com">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="keluhan">Keluhan</label>
+                                    <textarea id="keluhan" rows="4" required placeholder="Jelaskan keluhan atau pertanyaan Anda..."></textarea>
+                                </div>
+
+                                <button type="submit" class="btn-submit">Kirim Data</button>
+                            </form>
+
+                            <!-- Table Container -->
+                            <div id="tableContainer" class="table-container">
+                                <h3 style="color: var(--primary); margin-bottom: 15px;">Data Konsultasi</h3>
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Lengkap</th>
+                                            <th>Email</th>
+                                            <th>Keluhan</th>
+                                            <th>Waktu Daftar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableBody">
+                                        <!-- Data will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer>
+                        <div class="footer-content">
+                            <h3>Jemari Bidan</h3>
+                            <p>Menemani setiap langkah kehamilan Anda dengan penuh kasih</p>
+                            <div class="social-links">
+                                <a href="https://www.instagram.com/jemari.bidan" target="_blank">📷</a>
+                                <a href="#">📧</a>
+                                <a href="#">📱</a>
+                            </div>
+                            <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;">
+                                © 2024 Jemari Bidan. All rights reserved.
+                            </p>
+                        </div>
+                    </footer>
+
+                    <div id="loginModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close-btn">&times;</span>
+                            <h2>Login Akun</h2>
+
+                            <form id="formLogin">
+                                <div class="input-group">
+                                    <label>Username</label>
+                                    <input type="text" id="username" required>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Password</label>
+                                    <input type="password" id="password" required>
+                                </div>
+
+                                <button type="submit" class="login-btn">Login</button>
+                            </form>
+
+                            <div id="hasilLogin" class="login-result"></div>
+                        </div>
                     </div>
-                    <h3>Konsultasi Online</h3>
-                    <p>Konsultasi kesehatan ibu dan anak dengan tenaga medis profesional kapan saja dan di mana saja.</p>
-                </div>
-            </a>
-
-            <a href="https://www.alodokter.com/" target="_blank" style="text-decoration: none;">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2785/2785544.png" alt="Pemeriksaan">
-                    </div>
-                    <h3>Pemeriksaan Kehamilan</h3>
-                    <p>Pantau kesehatan kehamilan Anda dengan pemeriksaan rutin dan terjadwal bersama bidan berpengalaman.</p>
-                </div>
-            </a>
-
-            <a href="https://kemkes.go.id/" target="_blank" style="text-decoration: none;">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2785/2785482.png" alt="Informasi">
-                    </div>
-                    <h3>Informasi Kesehatan</h3>
-                    <p>Akses informasi kesehatan terkini dan terpercaya untuk ibu hamil dan bayi dari sumber resmi.</p>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <!-- VIDEO SECTION -->
-    <section id="edukasi" class="fade-in">
-        <div class="video-section">
-            <h2 class="section-title">Edukasi Pijat Bayi</h2>
-            <p style="margin-bottom: 30px; color: #666;">Pelajari teknik pijat bayi yang benar untuk meningkatkan ikatan batin dan kesehatan si kecil</p>
-            
-            <div class="video-container">
-                <iframe 
-                    src="https://www.youtube.com/embed/6JP-66D-gBY?si=v7zq51VnoKkcilCh" 
-                    title="Video Edukasi Pijat Bayi"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            </div>
-        </div>
-    </section>
-
-    <!-- KONSULTASI SECTION -->
-    <section id="kontak" class="fade-in">
-        <h2 class="section-title">Daftar Konsultasi</h2>
-
-        <div class="konsultasi-container">
-            <!-- Success Message -->
-            <div id="successMessage" class="success-message">
-                ✅ Data berhasil ditambahkan! Berikut adalah daftar konsultasi Anda:
-            </div>
-
-            <!-- Form -->
-            <form id="formKonsultasi">
-                <div class="form-group">
-                    <label for="nama">Nama Lengkap</label>
-                    <input type="text" id="nama" required placeholder="Masukkan nama lengkap Anda">
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required placeholder="contoh@email.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="keluhan">Keluhan</label>
-                    <textarea id="keluhan" rows="4" required placeholder="Jelaskan keluhan atau pertanyaan Anda..."></textarea>
-                </div>
-
-                <button type="submit" class="btn-submit">Kirim Data</button>
-            </form>
-
-            <!-- Table Container -->
-            <div id="tableContainer" class="table-container">
-                <h3 style="color: var(--primary); margin-bottom: 15px;">Data Konsultasi</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Lengkap</th>
-                            <th>Email</th>
-                            <th>Keluhan</th>
-                            <th>Waktu Daftar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <!-- Data will be inserted here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <h3>Jemari Bidan</h3>
-            <p>Menemani setiap langkah kehamilan Anda dengan penuh kasih</p>
-            <div class="social-links">
-                <a href="https://www.instagram.com/jemari.bidan" target="_blank">📷</a>
-                <a href="#">📧</a>
-                <a href="#">📱</a>
-            </div>
-            <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;">
-                © 2024 Jemari Bidan. All rights reserved.
-            </p>
-        </div>
-    </footer>
-
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Login Akun</h2>
-
-            <form id="formLogin">
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" id="username" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="password" required>
-                </div>
-
-                <button type="submit" class="login-btn">Login</button>
-            </form>
-
-            <div id="hasilLogin" class="login-result"></div>
-        </div>
-    </div>
-
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.style.boxShadow = '0 2px 30px rgba(0,0,0,0.1)';
-                navbar.style.padding = '10px 50px';
-            } else {
-                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.05)';
-                navbar.style.padding = '15px 50px';
-            }
-        });
-
-        // Fade in animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Login Modal
-        const modal = document.getElementById("loginModal");
-        const openBtn = document.getElementById("openLogin");
-        const closeBtn = document.querySelector(".close-btn");
-
-        openBtn.addEventListener("click", function(e){
-            e.preventDefault();
-            modal.style.display = "flex";
-        });
-
-        closeBtn.addEventListener("click", function(){
-            modal.style.display = "none";
-        });
-
-        window.addEventListener("click", function(e){
-            if(e.target === modal){
-                modal.style.display = "none";
-            }
-        });
-
-        document.getElementById("formLogin").addEventListener("submit", function(event){
-            event.preventDefault();
-
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            const hasilLogin = document.getElementById("hasilLogin");
-
-            if(username === "admin" && password === "12345"){
-                hasilLogin.innerHTML = "<p style='color:green;'>Login Berhasil ✅</p>";
-            } else {
-                hasilLogin.innerHTML = "<p style='color:red;'>Username atau Password salah ❌</p>";
-            }
-            this.reset();
-        });
-
-        // KONSULTASI FORM HANDLING
-        let nomorUrut = 1;
-        const dataKonsultasi = [];
-
-        document.getElementById("formKonsultasi").addEventListener("submit", function(event){
-            event.preventDefault();
-
-            // Ambil nilai dari form
-            const nama = document.getElementById("nama").value;
-            const email = document.getElementById("email").value;
-            const keluhan = document.getElementById("keluhan").value;
-            const waktu = new Date().toLocaleString('id-ID', {
-                dateStyle: 'medium',
-                timeStyle: 'short'
-            });
-
-            // Simpan data
-            const data = {
-                no: nomorUrut++,
-                nama: nama,
-                email: email,
-                keluhan: keluhan,
-                waktu: waktu
-            };
-            dataKonsultasi.push(data);
-
-            // Update tabel
-            updateTable();
-
-            // Tampilkan success message dan table container
-            document.getElementById("successMessage").classList.add("show");
-            document.getElementById("tableContainer").classList.add("show");
-
-            // Reset form
-            this.reset();
-
-            // Scroll ke tabel
-            document.getElementById("tableContainer").scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'nearest' 
-            });
-        });
-
-        function updateTable() {
-            const tbody = document.getElementById("tableBody");
-            tbody.innerHTML = "";
-
-            dataKonsultasi.forEach((data, index) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${data.no}</td>
-                    <td>${escapeHtml(data.nama)}</td>
-                    <td>${escapeHtml(data.email)}</td>
-                    <td>${escapeHtml(data.keluhan)}</td>
-                    <td>${data.waktu}</td>
-                `;
-                
-                // Animasi untuk baris baru
-                if (index === dataKonsultasi.length - 1) {
-                    row.style.animation = "fadeIn 0.5s ease";
-                    row.style.backgroundColor = "var(--light)";
-                    setTimeout(() => {
-                        row.style.backgroundColor = "";
-                    }, 2000);
-                }
-                
-                tbody.appendChild(row);
-            });
-        }
-
-        // Helper function untuk mencegah XSS
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-    </script>
-
-</body>
-</html>
+                <script src="script.js"></script>
+                </body>
+                </html>
